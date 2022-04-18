@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="stylesheet" href="/app/css/normalize.css">
+<link rel="stylesheet" href="/app/css/skeleton.css">
+	<title>수면시간계산</title>
+<script src="js/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
+
+	<script>
+	$(document).ready(function() {
+		$('.back').click(function(){
+			window.location = "/";
+		});
+
+	$('#calculate').click(function() {
+		if($('#hour').val() != '시간' && $('#minute').val() != '분') {
+			$('#start').hide();
+			var setTime = new Date();
+
+			if($('#hour').val() == 12) {
+				$('#hour').val(0);
+			}
+
+			if($('#ampm').val() == "오전") {
+				setTime.setHours($('#hour').val());
+			}
+			else if($('#ampm').val() == "오후") {
+				setTime.setHours(+$('#hour').val() + 12);
+			}
+
+			setTime.setMinutes($('#minute').val());
+
+			var res1 = new Date(setTime.getTime() - 270*60000);
+			var res2 = new Date(res1.getTime() - 90*60000);
+			var res3 = new Date(res2.getTime() - 90*60000);
+			var res4 = new Date(res3.getTime() - 90*60000);
+
+			function retDate(dateObj) {
+				var formatted = '';
+				var pm = false;
+				if(dateObj.getHours() > 12) {
+					formatted = dateObj.getHours() - 12;
+					pm = true;
+				} else if(dateObj.getHours() < 12 && dateObj.getHours() != 0) {
+					formatted = dateObj.getHours();
+				} else if(dateObj.getHours() == 0){
+					formatted = "12";
+				} else if(dateObj.getHours() == 12){
+					formatted = "12";
+					pm = true;
+				}
+				if(dateObj.getMinutes() < 10) {
+					formatted = formatted + ":0" + dateObj.getMinutes();
+				} else {
+					formatted = formatted + ":" + dateObj.getMinutes();
+				}
+				if(pm == true) {
+					formatted = "오후 " + formatted;
+				} else {
+					formatted = "오전 " + formatted;
+				}
+				return formatted;
+			}
+
+			$('#result4').html(String(retDate(res1)));
+			$('#result3').html(String(retDate(res2)));
+			$('#result2').html(String(retDate(res3)));
+			$('#result1').html(String(retDate(res4)));
+			
+			$('#results').fadeIn();
+				} // end hour/minute check if
+				else {
+					alert("잠 잘 시간을 선택해주시길 바랍니다.");
+				} // end not-filled check
+			}); // end calculate
+
+// zzz 버튼을 누를 경우 작동하는 코드
+	$('#zzz').click(function() {
+		$('#start').hide();
+		var zDate = new Date();
+
+		var res1 = new Date(zDate.getTime() + 104*60000);
+		var res2 = new Date(res1.getTime() + 90*60000);
+		var res3 = new Date(res2.getTime() + 90*60000);
+		var res4 = new Date(res3.getTime() + 90*60000);
+		var res5 = new Date(res4.getTime() + 90*60000);
+		var res6 = new Date(res5.getTime() + 90*60000);
+
+		function retDate(dateObj) {
+			var formatted = '';
+			var pm = false;
+			if(dateObj.getHours() > 12) {
+				formatted = dateObj.getHours() - 12;
+				pm = true;
+			} else if(dateObj.getHours() < 12 && dateObj.getHours() != 0) {
+				formatted = dateObj.getHours();
+			} else if(dateObj.getHours() == 0) {
+				formatted = "12";
+			} else if(dateObj.getHours() == 12) {
+				formatted = "12";
+				pm = true;
+			}
+			if(dateObj.getMinutes() < 10) {
+				formatted = formatted + ":0" + dateObj.getMinutes();
+			} else {
+				formatted = formatted + ":" + dateObj.getMinutes();
+			}
+			if(pm == true) {
+				formatted = "오후" + formatted;
+			} else {
+				formatted = "오전" + formatted;
+			}
+			return formatted;
+		}
+
+		$('#resultNow1').html(String(retDate(res1)));
+		$('#resultNow2').html(String(retDate(res2)));
+		$('#resultNow3').html(String(retDate(res3)));
+		$('#resultNow4').html(String(retDate(res4)));
+		$('#resultNow5').html(String(retDate(res5)));
+		$('#resultNow6').html(String(retDate(res6)));
+		
+		$('#resultsNow').fadeIn();
+	});
+});
+</script>
+</head>
+<body>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="row">
+	<div align="center" class="twelve columns">
+	<h2 style="text-align: center; font-size: 150%; color: white;">잠 시간 사이트</h2>
+	<div id="start">
+<p>
+	<span style="font-size: 150%; color: white;">나는 이 시간에 일어나고 싶습니다.</span>
+</p>
+<br>
+<div style="text-align: center; margin-top: -20px;">
+	<br>
+	<select id="hour" style="background-color: white; border-radius: 3px; width: 7vh;">
+		<option>시간</option>
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		<option>5</option>
+		<option>6</option>
+		<option>7</option>
+		<option>8</option>
+		<option>9</option>
+		<option>10</option>
+		<option>11</option>
+		<option>12</option>
+	</select>
+	<select id="minute" style="background-color: white; border-radius: 3px; width: 7vh;">
+		<option>분</option>
+		<option>00</option>
+		<option>05</option>
+		<option>10</option>
+		<option>15</option>
+		<option>20</option>
+		<option>25</option>
+		<option>30</option>
+		<option>35</option>
+		<option>40</option>
+		<option>45</option>
+		<option>50</option>
+		<option>55</option>
+		<option>60</option>
+	</select>
+	<select id="ampm" style="background-color: white; border-radius: 3px; width: 7vh;">
+		<option>오전</option>
+		<option>오후</option>
+	</select>
+	<br>
+	<br>
+	<button id="calculate" style="margin-top: 0px;">계산하기</button>
+	<br>
+	<br>
+	<p></p>
+</div>	
+<p>
+	<span style="font-size: 150%; padding: 0px 10px; color: white;">만약 지금 잠에 든다면 몇시에 일어나야 되나요?</span>
+</p>
+<center>
+	<br>
+	<button id="zzz" style="margin-top: 0px; width: 60px;">ZZZ</button>
+	<br>
+	<br>
+	<p>
+</center>
+</div>
+<!-- 계산하기 버튼을 눌렀을때 결과화면 -->
+		<div id="results" style="display: none;">
+		<p style="font-size: 130%; color: white;">수면시간 계산은 다음과 같습니다.</p>
+		<br>
+		<span id="result1" style="font-size: 300%; color: rgb(1, 223, 116);" title="Six Cycles: 9시간 수면"></span>
+		 <i style="font-size: 200%; color: rgb(0, 128, 255);"> <권장></i>
+		 <span id="result2" style="font-size: 300%; color: rgb(1, 223, 116);" title="Five Cycles: 7시간 수면"></span> 
+		 <i style="font-size: 200%; color: rgb(0, 128, 255);"> <권장> </i> 
+		 <span id="result3" style="font-size: 300%; color: rgb(1, 223, 116);" title="Four Cycles: 6시간 수면"></span> 
+		 <i style="font-size: 200%; color: white;"> 혹은 </i> 
+		 <span id="result4" style="font-size: 300%; color: rgb(1, 223, 116);" title="Three Cycles: 4시간 30분"></span>
+		 <i style="font-size: 200%; color: white;"> </i>
+		 <p style="margin-top: 1em; font-size: 140%; color: rgb(0,128,255);">
+		 	평균적으로 아동(13세미만)은 9~13시간, 청소년은 8시간 30분, 성인은 7~9시간, 노인은 7~8시간을 권장합니다. 
+		 </p>
+		 <br>
+		 <br>
+		 <center>
+		 	<a class="back" href="index.html" style="text-decoration: none; color: red;">돌아가기</a>
+		 	<br>
+		 	<br>
+		 <p style="font-size: 140%;">
+		</div>
+		<!-- zzz 버튼을 눌렀을 경우 나올 결과 화면 -->
+		 <div id="resultsNow" style="display:none; color: white;"><p style="font-size: 140%">평균적으로 인간은 잠에 들기까지<b> 14분정도 </b> 소요된다고 합니다.</p>
+		 	<br>
+		 <p style="font-size: 140% color: white;">만약 지금 바로 잠을 잔다면 당신은 이 시간에 일어나셔야 합니다.</p>
+		 <br>
+		 <span id="resultNow1" style="font-size: 300%; color: rgb(168, 39, 254);" title="One Cycle: 1시간 30분 수면"></span> 
+		 <i style="font-size: 150%;">&nbsp;or </i>
+		 <span id="resultNow2" style="font-size: 300%; color: rgb(154, 3, 254);" title="Two Cycles: 3시간 수면"></span> 
+		 <i style="font-size: 150%;">&nbsp;or </i>
+		 <span id="resultNow3" style="font-size: 300%; color: rgb(150, 105, 254);" title="Three Cycles: 4시간 30분 수면"></span>
+		 <i style="font-size: 150%;">&nbsp;or </i>
+		 <span id="resultNow4" style="font-size: 300%; color: rgb(140, 140, 255);" title="Four Cycles: 6시간 수면"></span> 
+		 <i style="font-size: 150%;">&nbsp;or </i>
+		 <span id="resultNow5" style="font-size: 300%; color: rgb(187, 187, 255);" title="Five Cycles: 7시간 30분 수면"></span>
+		 <i style="font-size: 150%;">&nbsp;or </i>
+		 <span id="resultNow6" style="font-size: 300%; color: rgb(143, 254, 221);" title="Six Cycles: 9시간 수면"></span>
+		 <p style="margin-top: 1em; font-size: 150%; color: rgb(0, 128, 255);">좋은 숙면을 위해 5~6시간 정도 완벽한 수면주기(Sleep Cycle)를 유지해야 합니다.</p>
+		 <br>
+		 <center><a class="back" href="index.html" style="color:red;
+		 text-decoration: none;">돌아가기</a><br/></center></div> <!-- end resultsNow -->
+		 <a class="nosleep" href="https://www.youtube.com/watch?v=lHn7xv4Zxjg" style="text-decoration: none; color: black;">
+		 	<br>
+		 	<br>
+		 	<span style="color: orange;">잠이 안오시나요?</span>
+		</div>
+	</div>
+</body>
+<!-- CSS 처리 -->
+<style type="text/css">
+	#container {
+		margin: 0 auto;
+		max-width: 890px;
+	}
+
+	p {
+		text-align: center;
+	}
+
+	.toggle,
+	[id^=drop] {
+		display: none;
+	}
+
+	/* Giving a background-color to the nav container. */
+	nav { 
+		margin:0;
+		padding: 20px;
+		background-color: #001F3F;
+	}
+
+	#logo {
+		display: block;
+		padding: 0 30px;
+		float: left;
+		font-size:20px;
+		line-height: 60px;
+	}
+
+/* Since we'll have the "ul li" "float:left"
+* we need to add a clear after the container. */
+
+nav:after {
+	content:"";
+	display:table;
+	clear:both;
+}
+
+/* Removing padding, margin and "list-style" from the "ul",
+* and adding "position:reltive" */
+nav ul {
+	float: left;
+	padding:0;
+	margin:0;
+	list-style: none;
+	position: relative;
+}
+
+/* Positioning the navigation items inline */
+nav ul li {
+	margin: 0px;
+	display:inline-block;
+	float: left;
+	background-color: #001f3f;
+}
+
+/* Styling the links */
+nav a {
+	display:block;
+	padding:20px 20px;	
+	color:#FFF;
+	font-size:18px;
+	text-decoration:none;
+	font-family: "Josefin Sans", sans-serif;
+}
+
+
+nav ul li ul li:hover { background: #fff;}
+
+/* Background color change on Hover */
+nav a:hover { 
+	background-color: #fff; 
+}
+
+/* Hide Dropdowns by Default
+* and giving it a position of absolute */
+nav ul ul {
+	display: none;
+	position: absolute; 
+	/* has to be the same number as the "line-height" of "nav a" */
+	top: 60px; 
+}
+
+/* Display Dropdowns on Hover */
+nav ul li:hover > ul {
+	display:inherit;
+}
+
+/* Fisrt Tier Dropdown */
+nav ul ul li {
+	width:220px;
+	float:none;
+	display:list-item;
+	position: relative;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+/* Second, Third and more Tiers	
+ * We move the 2nd and 3rd etc tier dropdowns to the left
+ * by the amount of the width of the first tier.
+ */
+ nav ul ul ul li {
+ 	position: relative;
+ 	top:-60px;
+ 	/* has to be the same number as the "width" of "nav ul ul li" */ 
+ 	left:190px; 
+ }
+ nav ul ul ul ul li {
+ 	position: relative;
+ 	top:-60px;
+ 	/* has to be the same number as the "width" of "nav ul ul li" */ 
+ 	left:190px; 
+ }
+
+ 
+ /* Change ' +' in order to change the Dropdown symbol */
+ li > a:after { content:  ''; }
+ li > a:only-child:after { content: ''; }
+
+ input[type="checkbox"], input[type="radio"] {
+ 	display: none;
+ }
+
+/* Media Queries
+--------------------------------------------- */
+
+@media all and (max-width : 768px) {
+
+	#logo {
+		display: inline;
+		padding: 1px;
+		width: 70%;
+		text-align: left;
+		float: left;
+	}
+	.icon {
+		max-width: 40%;
+		max-height: 40%;
+	}
+	.featur {
+		max-width: 90%;
+		max-height: 90%;
+	}
+
+	nav {
+		margin: 0;
+		margin-bottom: 30px;
+	}
+	
+	nav ul {
+		float: right;
+	}	
+
+	/* Hide the navigation menu by default */
+	/* Also hide the  */
+	.toggle + a,
+	.menu {
+		display: none;
+	}
+
+	/* Stylinf the toggle lable */
+	.toggle {
+		display: block;
+		background-color: #001F3F;
+		padding: 14px 20px;
+		color: #ffffff;
+		font-size: 17px;
+		text-decoration: none;
+		border: none;
+		padding: 0;
+		margin: 10px;
+		text-align: end;
+	}
+
+	.toggle:hover {
+		background-color: #2880a0;
+	}
+
+	/* Display Dropdown when clicked on Parent Lable */
+	[id^=drop]:checked + ul {
+		display: block;
+	}
+
+	/* Change menu item's width to 100% */
+	nav ul li {
+		display: block;
+		width: 100%;
+	}
+
+	nav ul ul .toggle,
+	nav ul ul a {
+		padding: 0 40px;
+	}
+
+	nav ul ul ul a {
+		padding: 0 80px;
+	}
+
+	nav a:hover,
+	nav ul ul ul a {
+		background-color: #fff;
+	}
+	
+	nav ul li ul li .toggle,
+	nav ul ul a,
+	nav ul ul ul a{
+		padding:14px 20px;	
+		color:#FFF;
+		font-size:17px; 
+	}
+	
+	
+	nav ul li ul li .toggle,
+	nav ul ul a {
+		background-color: #2880A0; 
+	}
+
+	/* Hide Dropdowns by Default */
+	nav ul ul {
+		float: none;
+		position:static;
+		color: #ffffff;
+		/* has to be the same number as the "line-height" of "nav a" */
+	}
+	
+	/* Hide menus on hover */
+	nav ul ul li:hover > ul,
+	nav ul li:hover > ul {
+		display: none;
+	}
+	
+	/* Fisrt Tier Dropdown */
+	nav ul ul li {
+		display: block;
+		width: 100%;
+		}	nav ul ul ul li {
+			position: static;
+			/* has to be the same number as the "width" of "nav ul ul li" */ 
+
+		}
+
+	}
+
+	@media all and (max-width : 330px) {
+
+		nav ul li {
+			display:block;
+			width: 94%;
+		}
+
+	}
+
+/* 배경색 처리*/
+	
+html,body {
+height: 100%;
+} 
+body {
+background: #0f3854; 
+background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%); background-size: 100%;
+}
+p {
+margin: 0; padding: 0;
+}
+#clock {
+font-family: 'Share Tech Mono', monospace; color: #ffffff; text-align: center; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #daf6ff; text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+}
+.time {
+letter-spacing: 0.05em; font-size: 80px; padding: 5px 0;
+}
+.date {
+letter-spacing: 0.1em; font-size: 24px;
+}
+.text {
+letter-spacing: 0.1em; font-size: 12px; padding: 20px 0 0;
+} 
+</style>
+</html>
